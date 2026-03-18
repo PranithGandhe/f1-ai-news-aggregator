@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ page_title or "AI Powered F1 News Aggregator"}}</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .article {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .category {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .source {
+            font-size: 14px;
+        }
+
+        a {
+            color: blue;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<h1>AI Powered F1 News Aggregator</h1>    
+<h2>{{ page_title or "Latest F1 News"}}</h2>
+
+<div style="margin-bottom:20px;">
+
+    <a href="/">All</a> |
+        
+    <a href="/category/Race Results">Race Results</a> |
+        
+    <a href="/category/Driver News">Driver News</a> |
+        
+    <a href="/category/Team Updates">Team Updates</a> |
+        
+    <a href="/category/Technical_Regulation">Technical & Regulation</a> |
+
+    <a href="/category/Other">Other</a>
+        
+</div>
+
+{% for article in articles %}
+
+<div class="article">
+
+    <h2>{{ article.title }}</h2>
+
+    <p class="category">
+        Category: {{ article.category }}
+    </p>
+
+    <p class="date">
+        Published: {{ article.published_date }}
+    </p>
+
+    <p>
+        {{ article.summary }}
+    </p>
+
+    <p class="source">
+        Source: {{ article.source }}
+        |
+        <a href="{{ article.link }}" target="_blank">
+            Read full article here
+        </a>
+    </p>
+
+</div>
+
+{% endfor %}
+
+</body>
+</html>

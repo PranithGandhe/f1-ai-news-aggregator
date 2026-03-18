@@ -1,0 +1,10 @@
+[
+    {
+        "name":"Formula1",
+        "url":"https://www.formula1.com/en/latest/all.xml"
+    },
+    {
+        "name": "BBC Sport F1",
+        "url": "http://feeds.bbci.co.uk/sport/formula1/rss.xml"
+    }
+]
