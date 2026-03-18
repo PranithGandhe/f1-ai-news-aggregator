@@ -1,6 +1,8 @@
-from database import load_query, get_connection
+from database import load_query, get_connection, initialize_database
 from flask import Flask, render_template
 import os
+
+initialize_database()
 
 app = Flask(__name__)
 
