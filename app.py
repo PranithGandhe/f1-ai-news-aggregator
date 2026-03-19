@@ -3,13 +3,18 @@ from flask import Flask, render_template
 import os
 from pipeline import run_pipeline
 
-import nltk
-nltk.download('punkt_tab')
+#import nltk
+#nltk.download('punkt_tab')
 
 initialize_database()
-run_pipeline()
 
 app = Flask(__name__)
+
+@app.route("/run-pipeline")
+def trigger_pipeline():
+
+    run_pipeline()
+    return "Pipeline executed successfully!"
 
 @app.route("/")
 def home():
