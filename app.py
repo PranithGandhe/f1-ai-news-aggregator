@@ -1,14 +1,16 @@
 from database import load_query, get_connection, initialize_database
 from flask import Flask, render_template
 import os
+from pipeline import run_pipeline
 
 #import nltk
 #nltk.download('punkt_tab')
 
 initialize_database()
+run_pipeline()
 
 app = Flask(__name__)
-
+'''
 @app.route("/run-pipeline")
 def trigger_pipeline():
     #from pipeline import run_pipeline
@@ -29,7 +31,7 @@ def trigger_pipeline():
     conn.close()
 
     return f"Pipeline ran. Articles in DB: {count}"
-
+'''
 @app.route("/")
 def home():
 
