@@ -3,8 +3,8 @@ from flask import Flask, render_template
 import os
 from pipeline import run_pipeline
 
-#import nltk
-#nltk.download('punkt_tab')
+import nltk
+nltk.download('punkt_tab')
 
 initialize_database()
 run_pipeline()
