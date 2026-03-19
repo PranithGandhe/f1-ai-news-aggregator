@@ -11,9 +11,24 @@ app = Flask(__name__)
 
 @app.route("/run-pipeline")
 def trigger_pipeline():
+    #from pipeline import run_pipeline
+    #run_pipeline()
+    #return "Pipeline executed successfully!"
+
     from pipeline import run_pipeline
+    from database import get_connection
+
     run_pipeline()
-    return "Pipeline executed successfully!"
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM processed_articles")
+    count = cursor.fetchone()[0]
+
+    conn.close()
+
+    return f"Pipeline ran. Articles in DB: {count}"
 
 @app.route("/")
 def home():
