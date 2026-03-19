@@ -1,8 +1,10 @@
 from database import load_query, get_connection, initialize_database
 from flask import Flask, render_template
 import os
+from pipeline import run_pipeline
 
 initialize_database()
+run_pipeline()
 
 app = Flask(__name__)
 
