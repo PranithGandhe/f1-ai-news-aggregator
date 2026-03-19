@@ -1,7 +1,6 @@
 from database import load_query, get_connection, initialize_database
 from flask import Flask, render_template
 import os
-from pipeline import run_pipeline
 
 #import nltk
 #nltk.download('punkt_tab')
@@ -12,7 +11,7 @@ app = Flask(__name__)
 
 @app.route("/run-pipeline")
 def trigger_pipeline():
-
+    from pipeline import run_pipeline
     run_pipeline()
     return "Pipeline executed successfully!"
 
