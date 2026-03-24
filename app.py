@@ -6,32 +6,22 @@ from pipeline import run_pipeline
 import nltk
 nltk.download('punkt_tab')
 
-initialize_database()
-run_pipeline()
+#initialize_database()
+#run_pipeline()
 
 app = Flask(__name__)
-'''
+
 @app.route("/run-pipeline")
 def trigger_pipeline():
-    #from pipeline import run_pipeline
-    #run_pipeline()
-    #return "Pipeline executed successfully!"
-
+    from database import initialize_database
     from pipeline import run_pipeline
-    from database import get_connection
 
+    initialize_database()
     run_pipeline()
 
-    conn = get_connection()
-    cursor = conn.cursor()
+    return "Pipeline is triggered."
 
-    cursor.execute("SELECT COUNT(*) FROM processed_articles")
-    count = cursor.fetchone()[0]
 
-    conn.close()
-
-    return f"Pipeline ran. Articles in DB: {count}"
-'''
 @app.route("/")
 def home():
 
