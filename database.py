@@ -1,12 +1,16 @@
 import sqlite3
 from datetime import datetime
+import psycopg2
+import os
 
-DB_NAME = "f1_news.db"
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+#DB_NAME = "f1_news.db"
 
 def get_connection():
-    conn = sqlite3.connect(DB_NAME)
-    conn.row_factory = sqlite3.Row
-    return conn
+    #conn = sqlite3.connect(DB_NAME)
+    #conn.row_factory = sqlite3.Row
+    return psycopg2.connect(DATABASE_URL)
 
 #-----------------------------------------------------------------------------------
 
