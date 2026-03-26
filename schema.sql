@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS raw_articles (
     published_date TIMESTAMP,
     content TEXT,
     status TEXT DEFAULT 'new',
-    created_at TEXT
+    created_at TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS processed_articles (

@@ -63,7 +63,7 @@ def insert_raw_articles(title, link, source, published_date, content):
             source,
             published_date,
             content,
-            datetime.utcnow().isoformat()
+            datetime.utcnow()
         ))
 
         conn.commit()
@@ -152,7 +152,7 @@ def insert_processed_article(raw_id, title, source, link, summary, category, pub
         summary,
         category,
         published_date,
-        datetime.utcnow().isoformat()
+        datetime.utcnow()
     ))
 
     conn.commit()

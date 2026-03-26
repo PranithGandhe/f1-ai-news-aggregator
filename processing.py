@@ -20,10 +20,15 @@ def process_articles():
             link = article["link"]
             summary = summarize(content)
             category = categorize(title, content)
-            published_date = article["published_date"]
+            #published_date = article["published_date"]
 
             print(f"Processed: {title}")
             print(f"Category: {category}")
+
+            published_date = article.get("published_date")
+
+            if not published_date or published_date == "":
+                published_date = None
 
             insert_processed_article(
                 raw_id = article["id"],
