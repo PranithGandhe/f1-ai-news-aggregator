@@ -27,7 +27,7 @@ def process_articles():
 
             published_date = article.get("published_date")
 
-            if not published_date or published_date == "":
+            if not published_date or published_date == " ":
                 published_date = None
 
             insert_processed_article(
