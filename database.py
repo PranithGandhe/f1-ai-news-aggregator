@@ -54,6 +54,8 @@ def insert_raw_articles(title, link, source, published_date, content):
     conn = get_connection()
     cursor = conn.cursor()
 
+    print("DEBUG published_date:", published_date, type(published_date))
+
     if not published_date or published_date == "":
         published_date = None
 
@@ -146,7 +148,7 @@ def insert_processed_article(raw_id, title, source, link, summary, category, pub
     cursor = conn.cursor()
     
     query = load_query("INSERT_PROCESSED_ARTICLE")
-    
+
     if not published_date or published_date == "":
         published_date = None
 
