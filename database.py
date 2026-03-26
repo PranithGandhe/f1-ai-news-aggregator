@@ -54,6 +54,9 @@ def insert_raw_articles(title, link, source, published_date, content):
     conn = get_connection()
     cursor = conn.cursor()
 
+    if not published_date or published_date == "":
+        published_date = None
+
     try:
         query = load_query("INSERT_RAW_ARTICLE")
 
@@ -141,8 +144,11 @@ def mark_article_failed(article_id):
 def insert_processed_article(raw_id, title, source, link, summary, category, published_date):
     conn = get_connection()
     cursor = conn.cursor()
-
+    
     query = load_query("INSERT_PROCESSED_ARTICLE")
+    
+    if not published_date or published_date == "":
+        published_date = None
 
     cursor.execute(query, (
         raw_id,

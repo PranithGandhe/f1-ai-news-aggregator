@@ -39,6 +39,9 @@ def ingest():
             #if published_date < two_days_ago:
             #   continue
 
+            if not published_date or published_date == "":
+                published_date = None
+
             insert_raw_articles(
                 title = title,
                 link = link,
