@@ -36,7 +36,14 @@ def initialize_database():
     with open("schema.sql", "r") as f:
         schema = f.read()
 
-    cursor.executescript(schema)
+    statements = schema.split(";")
+
+    for x in statements:
+        stmt = x.strip()
+        if stmt:
+            cursor.execute(stmt)
+
+    #cursor.executescript(schema)
 
     conn.commit()
     conn.close()
