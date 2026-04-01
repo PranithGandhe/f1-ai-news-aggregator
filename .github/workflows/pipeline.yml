@@ -3,7 +3,7 @@ name: Run F1 AI News Aggregator Pipeline Daily
 on:
   schedule:
     - cron: "0 */6 * * *"  
-  workflow_dispatch:        
+  workflow_dispatch:        # manual trigger button
 
 jobs:
   run-pipeline:
