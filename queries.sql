@@ -1,7 +1,8 @@
 INSERT_RAW_ARTICLE:
 INSERT INTO raw_articles 
 (title, link, source, published_date, content, created_at)
-VALUES (%s, %s, %s, %s, %s, %s);
+VALUES (%s, %s, %s, %s, %s, %s)
+ON CONFLICT (link) DO NOTHING;
 
 GET_UNPROCESSED_ARTICLES:
 SELECT * 
