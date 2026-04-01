@@ -90,10 +90,12 @@ def get_unprocessed_articles():
     
     rows = cursor.fetchall()
 
+    columns = [desc[0] for desc in cursor.description]
+
     articles = []
 
     for i in rows:
-        articles.append(dict(i))
+        articles.append(dict(zip(columns, i)))
     
     conn.close()
     return articles
