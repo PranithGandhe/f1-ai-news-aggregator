@@ -8,89 +8,162 @@
 
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f4;
+            margin: 0;
+            background-color: #0f172a;
+            color: #e2e8f0;
         }
 
-        h1 {
-            text-align: center;
-        }
-
-        .article {
-            background: white;
+        header {
+            background: #020617;
             padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 10px;
+            color: #cbd5f5;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .categories {
+            text-align: center;
             margin-bottom: 20px;
-            border-radius: 8px;
         }
 
-        .category {
-            color: #888;
+        .categories a {
+            margin: 5px;
+            padding: 8px 14px;
+            background: #1e293b;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #e2e8f0;
             font-size: 14px;
         }
 
-        .source {
-            font-size: 14px;
+        .categories a:hover {
+            background: #38bdf8;
+            color: black;
         }
 
-        a {
-            color: blue;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 12px;
+            border-radius: 12px;
+            background: #38bdf8;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        .date {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .summary {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #cbd5f5;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        a.read {
+            color: #38bdf8;
+            text-decoration: none;
         }
 
     </style>
 
 </head>
 
-
 <body>
 
-<h1>AI Powered F1 News Aggregator</h1>    
+<header>
+    🏎️ AI Powered F1 News
+</header>
+
 <h2>{{ page_title or "Latest F1 News"}}</h2>
 
-<div style="margin-bottom:20px;">
+<div class="container">
 
-    <a href="/">All</a> |
-        
-    <a href="/category/Race Results">Race Results</a> |
-        
-    <a href="/category/Driver News">Driver News</a> |
-        
-    <a href="/category/Team Updates">Team Updates</a> |
-        
-    <a href="/category/Technical_Regulation">Technical & Regulation</a> |
+    <div class="categories">
+        <a href="/">All</a>
+        <a href="/category/Race Results">Race Results</a>
+        <a href="/category/Driver News">Driver News</a>
+        <a href="/category/Team Updates">Team Updates</a>
+        <a href="/category/Technical_Regulation">Technical</a>
+        <a href="/category/Other">Other</a>
+    </div>
 
-    <a href="/category/Other">Other</a>
-        
+    <div class="grid">
+
+        {% for article in articles %}
+
+        <div class="card">
+
+            <div class="badge">{{ article.category }}</div>
+
+            <div class="title">
+                {{ article.title }}
+            </div>
+
+            <div class="date">
+                {{ article.published_date }}
+            </div>
+
+            <div class="summary">
+                {{ article.summary }}
+            </div>
+
+            <div class="footer">
+                {{ article.source }} |
+                <a class="read" href="{{ article.link }}" target="_blank">
+                    Read →
+                </a>
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
 </div>
-
-{% for article in articles %}
-
-<div class="article">
-
-    <h2>{{ article.title }}</h2>
-
-    <p class="category">
-        Category: {{ article.category }}
-    </p>
-
-    <p class="date">
-        Published: {{ article.published_date }}
-    </p>
-
-    <p>
-        {{ article.summary }}
-    </p>
-
-    <p class="source">
-        Source: {{ article.source }}
-        |
-        <a href="{{ article.link }}" target="_blank">
-            Read full article here
-        </a>
-    </p>
-
-</div>
-
-{% endfor %}
 
 </body>
 </html>
