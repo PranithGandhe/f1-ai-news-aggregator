@@ -2,9 +2,9 @@ from database import load_query, get_connection, initialize_database
 from flask import Flask, render_template
 import os
 from pipeline import run_pipeline
+from datetime import datetime, timezone
 
-import nltk
-nltk.download('punkt_tab')
+
 
 #initialize_database()
 #run_pipeline()
@@ -15,7 +15,7 @@ app = Flask(__name__)
 def trigger_pipeline():
     from database import initialize_database
     from pipeline import run_pipeline
-
+    
     initialize_database()
     run_pipeline()
 
@@ -42,7 +42,11 @@ def home():
 
     conn.close()
 
-    return render_template("index.html", articles = articles)
+    return render_template(
+        "index.html", 
+        articles = articles,
+        page_title = "Latest F1 News",
+        time_ago = time_ago)
 
 @app.route("/category/<category>")
 def category_page(category):
@@ -60,7 +64,36 @@ def category_page(category):
 
     conn.close()
 
-    return render_template("index.html", articles = articles, page_title = category)
+    return render_template(
+        "index.html", 
+        articles = articles, 
+        page_title = category,
+        time_ago = time_ago)
+
+def time_ago(published_date):
+    if not published_date:
+        return "Unknown"
+
+    now = datetime.now(timezone.utc)
+
+    if isinstance(published_date, str):
+        published_date = datetime.fromisoformat(published_date)
+
+    diff = now - published_date
+
+    seconds = diff.total_seconds()
+
+    if seconds < 60:
+        return "Just now"
+    elif seconds < 3600:
+        return f"{int(seconds // 60)} min ago"
+    elif seconds < 86400:
+        return f"{int(seconds // 3600)} hrs ago"
+    elif seconds < 172800:
+        return "Yesterday"
+    else:
+        return f"{int(seconds // 86400)} days ago"
+
 
 if __name__ == "__main__":
     #app.run(debug = True)
