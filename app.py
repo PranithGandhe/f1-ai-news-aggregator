@@ -77,10 +77,16 @@ def time_ago(published_date):
     now = datetime.now(timezone.utc)
 
     if isinstance(published_date, str):
-        published_date = datetime.fromisoformat(published_date)
+        try:
+            published_date = datetime.fromisoformat(published_date)
+        except:
+            return "Unknown"
 
-    if published_date.tzinfo is None:
-        published_date = published_date.replace(tzinfo=timezone.utc)
+    if isinstance(published_date, datetime):
+        if published_date.tzinfo is None:
+            published_date = published_date.replace(tzinfo=timezone.utc)
+        else:
+            published_date = published_date.astimezone(timezone.utc)
     
     diff = now - published_date
 
