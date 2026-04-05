@@ -1,7 +1,0 @@
-from database import initialize_database
-
-initialize_database()
-print("Database initialized successfully.")
-
-import nltk
-nltk.download('punkt')
