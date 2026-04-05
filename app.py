@@ -15,7 +15,7 @@ app = Flask(__name__)
 def trigger_pipeline():
     from database import initialize_database
     from pipeline import run_pipeline
-    
+
     initialize_database()
     run_pipeline()
 
@@ -79,6 +79,9 @@ def time_ago(published_date):
     if isinstance(published_date, str):
         published_date = datetime.fromisoformat(published_date)
 
+    if published_date.tzinfo is None:
+        published_date = published_date.replace(tzinfo=timezone.utc)
+    
     diff = now - published_date
 
     seconds = diff.total_seconds()
