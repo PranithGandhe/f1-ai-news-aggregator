@@ -80,9 +80,33 @@
             padding: 4px 10px;
             font-size: 12px;
             border-radius: 12px;
-            background: #38bdf8;
             color: black;
             margin-bottom: 10px;
+        }
+
+        .badge.race {
+            background: #ef4444;
+            color: white;
+        }
+
+        .badge.driver {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .badge.team {
+            background: #10b981;
+            color: white;
+        }
+
+        .badge.tech {
+            background: #a855f7;
+            color: white;
+        }
+
+        .badge.other {
+            background: #64748b;
+            color: white;
         }
 
         .date {
@@ -140,7 +164,7 @@
                 {% if article.category == 'Race Results' %}race
                 {% elif article.category == 'Driver News' %}driver
                 {% elif article.category == 'Team Updates' %}team
-                {% elif article.category == 'Technical & Regulation' %}tech
+                {% elif article.category == 'Technical_Regulation' %}tech
                 {% else %}other
                 {% endif %}
             ">
