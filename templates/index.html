@@ -186,10 +186,10 @@
         {% for article in articles %}
 
         <div class="card" onclick="openModal(
-            '{{ article.title | escape }}',
-            '{{ article.summary | escape }}',
-            '{{ article.source | escape }}',
-            '{{ article.link }}'
+            '{{ article.title | tojson }}',
+            '{{ article.summary | tojson }}',
+            '{{ article.source | tojson }}',
+            '{{ article.link | tojson }}'
         )">
 
             <div class="badge 
