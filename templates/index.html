@@ -66,7 +66,8 @@
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.02);
+            cursor: pointer;
         }
 
         .title {
@@ -131,6 +132,32 @@
             text-decoration: none;
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+        }
+
+        .modal-content {
+            background: #1e293b;
+            margin: 10% auto;
+            padding: 20px;
+            width: 60%;
+            border-radius: 12px;
+            color: #e2e8f0;
+        }
+
+        .close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
     </style>
 
 </head>
@@ -158,7 +185,12 @@
 
         {% for article in articles %}
 
-        <div class="card">
+        <div class="card" onclick="openModal(
+            '{{ article.title | escape }}',
+            '{{ article.summary | escape }}',
+            '{{ article.source | escape }}',
+            '{{ article.link }}'
+        )">
 
             <div class="badge 
                 {% if article.category == 'Race Results' %}race
@@ -197,6 +229,47 @@
     </div>
 
 </div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">&times;</span>
+
+        <h2 id="modal-title"></h2>
+
+        <p id="modal-summary"></p>
+
+        <p id="modal-source"></p>
+
+        <a id="modal-link" target="_blank">Read full article →</a>
+
+    </div>
+</div>
+
+<script>
+
+    function openModal(title, summary, source, link) {
+        document.getElementById("modal-title").innerText = title;
+        document.getElementById("modal-summary").innerText = summary;
+        document.getElementById("modal-source").innerText = "Source: " + source;
+        document.getElementById("modal-link").href = link;
+    
+        document.getElementById("modal").style.display = "block";
+    }
+    
+    function closeModal() {
+        document.getElementById("modal").style.display = "none";
+    }
+    
+    // close when clicking outside
+    window.onclick = function(event) {
+        let modal = document.getElementById("modal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    
+    </script>
 
 </body>
 </html>
