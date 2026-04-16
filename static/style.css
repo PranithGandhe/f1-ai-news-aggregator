@@ -1,0 +1,24 @@
+.badge.race {
+    background: #ef4444;
+    color: white;
+}
+
+.badge.driver {
+    background: #3b82f6;
+    color: white;
+}
+
+.badge.team {
+    background: #10b981;
+    color: white;
+}
+
+.badge.tech {
+    background: #a855f7;
+    color: white;
+}
+
+.badge.other {
+    background: #64748b;
+    color: white;
+}
