@@ -209,6 +209,36 @@
             transform: scale(1.05);
         }
 
+        .top-wrapper {
+            position: relative;
+        }
+
+        .scroll-btn {
+            position: absolute;
+            top: 40%;
+            transform: translateY(-50%);
+            background: #1e293b;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .scroll-btn.left {
+            left: -10px;
+        }
+
+        .scroll-btn.right {
+            right: -10px;
+        }
+
+        .scroll-btn:hover {
+            background: #38bdf8;
+            color: black;
+        }
+
     </style>
 
 </head>
@@ -234,40 +264,48 @@
 
     <h2 style="margin-bottom: 10px;">🔥 Top Stories</h2>
 
-    <div class="top-scroll">
-    
-        {% for article in latest_articles %}
-    
-        <div class="top-card"
-             data-title="{{ article.title | e }}"
-             data-summary="{{ article.summary | e }}"
-             data-source="{{ article.source | e }}"
-             data-link="{{ article.link }}"
-             onclick="handleCardClick(this)">
-    
-             <div class="badge 
-                {% if article.category == 'Race Results' %}race
-                {% elif article.category == 'Driver News' %}driver
-                {% elif article.category == 'Team Updates' %}team
-                {% elif article.category == 'Technical_Regulation' or article.category == 'Technical' %}tech
-                {% else %}other
-                {% endif %}
-            ">
-                {{ article.category }}
+    <div class="top-wrapper">
+
+        <button class="scroll-btn left" onclick="scrollLeft()">←</button>
+
+        <div class="top-scroll" id="topScroll">
+        
+            {% for article in latest_articles %}
+        
+            <div class="top-card"
+                data-title="{{ article.title | e }}"
+                data-summary="{{ article.summary | e }}"
+                data-source="{{ article.source | e }}"
+                data-link="{{ article.link }}"
+                onclick="handleCardClick(this)">
+        
+                <div class="badge 
+                    {% if article.category == 'Race Results' %}race
+                    {% elif article.category == 'Driver News' %}driver
+                    {% elif article.category == 'Team Updates' %}team
+                    {% elif article.category == 'Technical_Regulation' or article.category == 'Technical' %}tech
+                    {% else %}other
+                    {% endif %}
+                ">
+                    {{ article.category }}
+                </div>
+        
+                <div class="title">
+                    {{ article.title }}
+                </div>
+        
+                <div class="date">
+                    {{ time_ago(article.published_date) }}
+                </div>
+        
             </div>
-    
-            <div class="title">
-                {{ article.title }}
-            </div>
-    
-            <div class="date">
-                {{ time_ago(article.published_date) }}
-            </div>
-    
+        
+            {% endfor %}
+        
         </div>
-    
-        {% endfor %}
-    
+
+        <button class="scroll-btn right" onclick="scrollRight()">→</button>
+
     </div>
 
     <div class="grid">
@@ -365,7 +403,16 @@
             modal.style.display = "none";
         }
     }
+
+    function scrollLeft() {
+        const container = document.getElementById("topScroll");
+        container.scrollBy({ left: -300, behavior: "smooth" });
+    }
     
+    function scrollRight() {
+        const container = document.getElementById("topScroll");
+        container.scrollBy({ left: 300, behavior: "smooth" });
+    }
     </script>
 
 </body>
