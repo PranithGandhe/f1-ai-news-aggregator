@@ -33,10 +33,6 @@ def home():
 
     rows = cursor.fetchall()
 
-    '''print(type(articles))
-    print(type(articles[0]))
-    print(articles[0])'''
-
     columns = [col[0] for col in cursor.description]
     articles = [dict(zip(columns, row)) for row in rows]
 
@@ -44,7 +40,8 @@ def home():
     cursor.execute(query_latest)
 
     latest_rows = cursor.fetchall()
-    latest_articles = [dict(zip(columns, row)) for row in latest_rows]
+    latest_columns - [col[0] for col in cursor.description]
+    latest_articles = [dict(zip(latest_columns, row)) for row in latest_rows]
 
     conn.close()
 
