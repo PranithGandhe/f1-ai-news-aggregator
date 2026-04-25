@@ -468,30 +468,45 @@
     </script>
 
     <script>
+        const container = document.getElementById("topScroll");
+        
         container.addEventListener("scroll", () => {
-            if (container.scrollCardsLeft + container.clientWidth >= container.scrollWidth - 5) {
-                container.scrollTo({ left: 0, behavior: "smooth" });
+            const maxScrollLeft = container.scrollWidth - container.clientWidth;
+        
+            // near end → reset
+            if (container.scrollLeft >= maxScrollLeft - 5) {
+                container.scrollTo({
+                    left: 0,
+                    behavior: "smooth"
+                });
+            }
+        
+            // near start → jump to end (for reverse loop)
+            if (container.scrollLeft <= 0) {
+                container.scrollTo({
+                    left: maxScrollLeft,
+                    behavior: "smooth"
+                });
             }
         });
     </script>
 
     <script>
-        const container1 = document.getElementById("topScroll");
-        
         function updateActiveCard() {
             const cards = document.querySelectorAll(".top-card");
-            const containerCenter = container1.scrollCardsLeft + container1.offsetWidth / 2;
+            const container = document.getElementById("topScroll");
+        
+            const center = container.scrollLeft + container.offsetWidth / 2;
         
             cards.forEach(card => {
                 const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-        
-                const distance = Math.abs(containerCenter - cardCenter);
+                const distance = Math.abs(center - cardCenter);
         
                 card.classList.remove("active", "side", "far");
         
-                if (distance < 100) {
+                if (distance < 80) {
                     card.classList.add("active");
-                } else if (distance < 250) {
+                } else if (distance < 200) {
                     card.classList.add("side");
                 } else {
                     card.classList.add("far");
@@ -499,8 +514,13 @@
             });
         }
         
-        // run on scroll
-        container1.addEventListener("scroll", updateActiveCard);
+        // 🔥 important: trigger after scroll ends
+        let scrollTimeout;
+        
+        container.addEventListener("scroll", () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(updateActiveCard, 100);
+        });
         
         // run on load
         window.onload = updateActiveCard;
