@@ -184,6 +184,7 @@
             overflow-x: auto;
             gap: 20px;
             padding-bottom: 20px;
+            padding: 20px 0;
             scroll-behavior: smooth;
             align-items: center;
             scroll-snap-type: x mandatory;
@@ -200,15 +201,17 @@
 
         /* base */
         .top-card {
-            min-width: 260px;
+            min-width: 320px;
             background: #1e293b;
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
             flex-shrink: 0;
             cursor: pointer;
             transition: all 0.4s ease;
             opacity: 0.5;
             scroll-snap-align: center;
+            transform: scale(0.9);
+            opacity: 0.6;
         }
 
         /* center card */
@@ -232,10 +235,12 @@
 
         .top-card:hover {
             transform: scale(1.05);
+            opacity: 1;
         }
 
         .top-wrapper {
             position: relative;
+            margin-bottom: 40px;
         }
 
         .scroll-btn {
@@ -457,6 +462,14 @@
         setInterval(() => {
             scrollRight();
         }, 4000);
+    </script>
+
+    <script>
+        container.addEventListener("scroll", () => {
+            if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 5) {
+                container.scrollTo({ left: 0, behavior: "smooth" });
+            }
+        });
     </script>
 
     <script>
