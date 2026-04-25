@@ -40,7 +40,7 @@ def home():
     cursor.execute(query_latest)
 
     latest_rows = cursor.fetchall()
-    latest_columns - [col[0] for col in cursor.description]
+    latest_columns = [col[0] for col in cursor.description]
     latest_articles = [dict(zip(latest_columns, row)) for row in latest_rows]
 
     conn.close()
