@@ -245,7 +245,16 @@
              data-link="{{ article.link }}"
              onclick="handleCardClick(this)">
     
-            <div class="badge">{{ article.category }}</div>
+             <div class="badge 
+                {% if article.category == 'Race Results' %}race
+                {% elif article.category == 'Driver News' %}driver
+                {% elif article.category == 'Team Updates' %}team
+                {% elif article.category == 'Technical_Regulation' or article.category == 'Technical' %}tech
+                {% else %}other
+                {% endif %}
+            ">
+                {{ article.category }}
+            </div>
     
             <div class="title">
                 {{ article.title }}
