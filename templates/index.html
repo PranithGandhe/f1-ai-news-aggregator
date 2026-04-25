@@ -186,6 +186,7 @@
             padding-bottom: 20px;
             scroll-behavior: smooth;
             align-items: center;
+            scroll-snap-type: x mandatory;
         }
 
         .top-scroll::-webkit-scrollbar {
@@ -207,6 +208,7 @@
             cursor: pointer;
             transition: all 0.4s ease;
             opacity: 0.5;
+            scroll-snap-align: center;
         }
 
         /* center card */
@@ -250,11 +252,11 @@
         }
 
         .scroll-btn.left {
-            left: -10px;
+            left: 0;
         }
 
         .scroll-btn.right {
-            right: -10px;
+            right: 0;
         }
 
         .scroll-btn:hover {
@@ -426,32 +428,43 @@
             modal.style.display = "none";
         }
     }
-
-    const scrollAmount = 320;
-
-    function scrollLeft() {
-        const container = document.getElementById("topScroll");
-        container.scrollBy({
-            left: -scrollAmount,
-            behavior: "smooth"
-        });
-    }
-
-    function scrollRight() {
-        const container = document.getElementById("topScroll");
-        container.scrollBy({
-            left: scrollAmount,
-            behavior: "smooth"
-        });
-    }
     </script>
 
     <script>
         const container = document.getElementById("topScroll");
         
+        function getCardWidth() {
+            const card = document.querySelector(".top-card");
+            return card ? card.offsetWidth + 20 : 300; // include gap
+        }
+        
+        function scrollLeft() {
+            container.scrollBy({
+                left: -getCardWidth(),
+                behavior: "smooth"
+            });
+        }
+        
+        function scrollRight() {
+            container.scrollBy({
+                left: getCardWidth(),
+                behavior: "smooth"
+            });
+        }
+    </script>
+    
+    <script>
+        setInterval(() => {
+            scrollRight();
+        }, 4000);
+    </script>
+
+    <script>
+        const container1 = document.getElementById("topScroll");
+        
         function updateActiveCard() {
             const cards = document.querySelectorAll(".top-card");
-            const containerCenter = container.scrollLeft + container.offsetWidth / 2;
+            const containerCenter = container1.scrollLeft + container1.offsetWidth / 2;
         
             cards.forEach(card => {
                 const cardCenter = card.offsetLeft + card.offsetWidth / 2;
@@ -471,7 +484,7 @@
         }
         
         // run on scroll
-        container.addEventListener("scroll", updateActiveCard);
+        container1.addEventListener("scroll", updateActiveCard);
         
         // run on load
         window.onload = updateActiveCard;
