@@ -179,6 +179,36 @@
             color: #38bdf8;
         }
 
+        .top-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 10px;
+        }
+
+        .top-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .top-scroll::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 10px;
+        }
+
+        .top-card {
+            min-width: 250px;
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .top-card:hover {
+            transform: scale(1.05);
+        }
+
     </style>
 
 </head>
@@ -200,6 +230,35 @@
         <a href="/category/Team Updates">Team Updates</a>
         <a href="/category/Technical_Regulation">Technical</a>
         <a href="/category/Other">Other</a>
+    </div>
+
+    <h2 style="margin-bottom: 10px;">🔥 Top Stories</h2>
+
+    <div class="top-scroll">
+    
+        {% for article in latest_articles %}
+    
+        <div class="top-card"
+             data-title="{{ article.title | e }}"
+             data-summary="{{ article.summary | e }}"
+             data-source="{{ article.source | e }}"
+             data-link="{{ article.link }}"
+             onclick="handleCardClick(this)">
+    
+            <div class="badge">{{ article.category }}</div>
+    
+            <div class="title">
+                {{ article.title }}
+            </div>
+    
+            <div class="date">
+                {{ time_ago(article.published_date) }}
+            </div>
+    
+        </div>
+    
+        {% endfor %}
+    
     </div>
 
     <div class="grid">

@@ -41,3 +41,9 @@ FROM processed_articles
 WHERE category = %s
 ORDER BY processed_at DESC
 LIMIT 20;
+
+GET_LATEST_10:
+SELECT *
+FROM processed_articles
+ORDER BY processed_at DESC
+LIMIT 10;

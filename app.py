@@ -40,11 +40,18 @@ def home():
     columns = [col[0] for col in cursor.description]
     articles = [dict(zip(columns, row)) for row in rows]
 
+    query_latest = load_query("GET_LATEST_10")
+    cursor.execute(query_latest)
+
+    latest_rows = cursor.fetchall()
+    latest_articles = [dict(zip(columns, row)) for row in latest_rows]
+
     conn.close()
 
     return render_template(
         "index.html", 
         articles = articles,
+        latest_articles = latest_articles,
         page_title = "Latest F1 News",
         time_ago = time_ago)
 
