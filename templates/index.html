@@ -436,26 +436,29 @@
     </script>
 
     <script>
-        const container = document.getElementById("topScroll");
-        
-        function getCardWidth() {
-            const card = document.querySelector(".top-card");
-            return card ? card.offsetWidth + 20 : 300; // include gap
-        }
-        
         function scrollCardsLeft() {
-            container.scrollBy({
-                left: -getCardWidth(),
+            const container = document.getElementById("topScroll");
+
+            const card = document.querySelector(".top-card");
+            const scrollAmount = card ? card.offsetWidth + 20 : 300;
+
+            container.scrollTo({
+                left: Math.max(0, container.scrollLeft - scrollAmount),
                 behavior: "smooth"
-            });
-        }
-        
+        });
+}
+
         function scrollCardsRight() {
-            container.scrollBy({
-                left: getCardWidth(),
+            const container = document.getElementById("topScroll");
+
+            const card = document.querySelector(".top-card");
+            const scrollAmount = card ? card.offsetWidth + 20 : 300;
+
+            container.scrollTo({
+                left: container.scrollLeft + scrollAmount,
                 behavior: "smooth"
-            });
-        }
+        });
+}
     </script>
     
     <script>
