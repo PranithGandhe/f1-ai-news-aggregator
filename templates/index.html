@@ -182,8 +182,10 @@
         .top-scroll {
             display: flex;
             overflow-x: auto;
-            gap: 15px;
-            padding-bottom: 10px;
+            gap: 20px;
+            padding-bottom: 20px;
+            scroll-behavior: smooth;
+            align-items: center;
         }
 
         .top-scroll::-webkit-scrollbar {
@@ -195,14 +197,35 @@
             border-radius: 10px;
         }
 
+        /* base */
         .top-card {
-            min-width: 250px;
+            min-width: 260px;
             background: #1e293b;
             padding: 15px;
             border-radius: 10px;
             flex-shrink: 0;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.4s ease;
+            opacity: 0.5;
+        }
+
+        /* center card */
+        .top-card.active {
+            transform: scale(1.1) translateY(-10px);
+            opacity: 1;
+            z-index: 2;
+        }
+
+        /* side cards */
+        .top-card.side {
+            transform: scale(0.95);
+            opacity: 0.7;
+        }
+
+        /* far cards */
+        .top-card.far {
+            transform: scale(0.8);
+            opacity: 0.3;
         }
 
         .top-card:hover {
@@ -404,15 +427,54 @@
         }
     }
 
+    const scrollAmount = 320;
+
     function scrollLeft() {
         const container = document.getElementById("topScroll");
-        container.scrollBy({ left: -300, behavior: "smooth" });
+        container.scrollBy({
+            left: -scrollAmount,
+            behavior: "smooth"
+        });
     }
-    
+
     function scrollRight() {
         const container = document.getElementById("topScroll");
-        container.scrollBy({ left: 300, behavior: "smooth" });
+        container.scrollBy({
+            left: scrollAmount,
+            behavior: "smooth"
+        });
     }
+    </script>
+
+    <script>
+        const container = document.getElementById("topScroll");
+        
+        function updateActiveCard() {
+            const cards = document.querySelectorAll(".top-card");
+            const containerCenter = container.scrollLeft + container.offsetWidth / 2;
+        
+            cards.forEach(card => {
+                const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        
+                const distance = Math.abs(containerCenter - cardCenter);
+        
+                card.classList.remove("active", "side", "far");
+        
+                if (distance < 100) {
+                    card.classList.add("active");
+                } else if (distance < 250) {
+                    card.classList.add("side");
+                } else {
+                    card.classList.add("far");
+                }
+            });
+        }
+        
+        // run on scroll
+        container.addEventListener("scroll", updateActiveCard);
+        
+        // run on load
+        window.onload = updateActiveCard;
     </script>
 
 </body>
