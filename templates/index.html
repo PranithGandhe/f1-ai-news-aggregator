@@ -184,7 +184,7 @@
             overflow-x: auto;
             gap: 20px;
             padding-bottom: 20px;
-            padding: 20px 0;
+            padding: 40px 0;
             scroll-behavior: smooth;
             align-items: center;
             scroll-snap-type: x mandatory;
@@ -296,7 +296,7 @@
 
     <div class="top-wrapper">
 
-        <button class="scroll-btn left" onclick="scrollLeft()">←</button>
+        <button class="scroll-btn left" onclick="scrollCardsLeft()">←</button>
 
         <div class="top-scroll" id="topScroll">
         
@@ -334,7 +334,7 @@
         
         </div>
 
-        <button class="scroll-btn right" onclick="scrollRight()">→</button>
+        <button class="scroll-btn right" onclick="scrollCardsRight()">→</button>
 
     </div>
 
@@ -443,14 +443,14 @@
             return card ? card.offsetWidth + 20 : 300; // include gap
         }
         
-        function scrollLeft() {
+        function scrollCardsLeft() {
             container.scrollBy({
                 left: -getCardWidth(),
                 behavior: "smooth"
             });
         }
         
-        function scrollRight() {
+        function scrollCardsRight() {
             container.scrollBy({
                 left: getCardWidth(),
                 behavior: "smooth"
@@ -460,13 +460,13 @@
     
     <script>
         setInterval(() => {
-            scrollRight();
+            scrollCardsRight();
         }, 4000);
     </script>
 
     <script>
         container.addEventListener("scroll", () => {
-            if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 5) {
+            if (container.scrollCardsLeft + container.clientWidth >= container.scrollWidth - 5) {
                 container.scrollTo({ left: 0, behavior: "smooth" });
             }
         });
@@ -477,7 +477,7 @@
         
         function updateActiveCard() {
             const cards = document.querySelectorAll(".top-card");
-            const containerCenter = container1.scrollLeft + container1.offsetWidth / 2;
+            const containerCenter = container1.scrollCardsLeft + container1.offsetWidth / 2;
         
             cards.forEach(card => {
                 const cardCenter = card.offsetLeft + card.offsetWidth / 2;
