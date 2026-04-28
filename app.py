@@ -50,7 +50,9 @@ def home():
         articles = articles,
         latest_articles = latest_articles,
         page_title = "Latest F1 News",
-        time_ago = time_ago)
+        time_ago = time_ago,
+        show_top_stories=True
+        )
 
 @app.route("/category/<category>")
 def category_page(category):
@@ -72,7 +74,9 @@ def category_page(category):
         "index.html", 
         articles = articles, 
         page_title = category,
-        time_ago = time_ago)
+        time_ago = time_ago,
+        show_top_stories=False
+        )
 
 def time_ago(published_date):
     if not published_date:

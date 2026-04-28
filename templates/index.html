@@ -296,6 +296,8 @@
         <a href="/category/Other">Other</a>
     </div>
 
+    {% if show_top_stories and latest_articles %}
+
     <h2 style="margin-bottom: 10px;">🔥 Top Stories</h2>
 
     <div class="top-wrapper">
@@ -341,6 +343,7 @@
         <button class="scroll-btn right" onclick="scrollCardsRight()">→</button>
 
     </div>
+    {% endif %}
 
     <div class="grid">
 
@@ -530,7 +533,7 @@
         
                 card.classList.remove("active", "side", "far");
         
-                if (distance < 120) {
+                if (distance < 140) {
                     card.classList.add("active");
                 } else if (distance < 200) {
                     card.classList.add("side");
