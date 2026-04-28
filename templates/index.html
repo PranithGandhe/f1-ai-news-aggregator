@@ -453,9 +453,6 @@
                 left: -scrollAmount,
                 behavior: "smooth"
             });
-
-            //trigger highlight immediately
-            waitForScrollEnd(updateActiveCard);
         }
 
         function scrollCardsRight() {
@@ -468,9 +465,6 @@
                 left: scrollAmount,
                 behavior: "smooth"
             });
-
-            //trigger highlight immediately
-            waitForScrollEnd(updateActiveCard);
         }
     </script>
 
@@ -493,61 +487,72 @@
     
     <script>
         setInterval(() => {
-        const container = document.getElementById("topScroll");
-
-        const card = document.querySelector(".top-card");
-        const scrollAmount = card ? card.offsetWidth + 20 : 300;
-
-        const maxScrollLeft = container.scrollWidth - container.clientWidth;
-
-        if (container.scrollLeft >= maxScrollLeft - scrollAmount) {
-            container.scrollTo({
-                left: 0,
-                behavior: "auto"
-            });
-            updateActiveCard();
-        } else {
-            container.scrollBy({
-                left: scrollAmount,
-                behavior: "smooth"
-            });
-        }
-
-        // sync highlight with movement
-        waitForScrollEnd(updateActiveCard);
-
-    }, 4000);
-    </script>
-
-
-    <script>
-        function updateActiveCard() {
-            const cards = document.querySelectorAll(".top-card");
             const container = document.getElementById("topScroll");
         
-            const center = container.scrollLeft + container.offsetWidth / 2;
+            const card = document.querySelector(".top-card");
+            const scrollAmount = card ? card.offsetWidth + 20 : 300;
         
-            cards.forEach(card => {
-                const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-                const distance = Math.abs(center - cardCenter);
+            const maxScrollLeft = container.scrollWidth - container.clientWidth;
         
-                card.classList.remove("active", "side", "far");
+            if (container.scrollLeft >= maxScrollLeft - scrollAmount) {
+                container.scrollTo({
+                    left: 0,
+                    behavior: "auto"
+                });
+            } else {
+                container.scrollBy({
+                    left: scrollAmount,
+                    behavior: "smooth"
+                });
+            }
         
-                if (distance < 140) {
-                    card.classList.add("active");
-                } else if (distance < 200) {
-                    card.classList.add("side");
-                } else {
-                    card.classList.add("far");
-                }
-            });
-        }
-        
-        // important: trigger after scroll ends
-        let scrollTimeout;
-        
-        // run on load
-        window.onload = updateActiveCard;
+        }, 4000);
+        </script>
+
+
+<script>
+    const container = document.getElementById("topScroll");
+    
+    function updateActiveCard() {
+        const cards = document.querySelectorAll(".top-card");
+    
+        const center = container.scrollLeft + container.offsetWidth / 2;
+    
+        let closestCard = null;
+        let minDistance = Infinity;
+    
+        cards.forEach(card => {
+            const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+            const distance = Math.abs(center - cardCenter);
+    
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestCard = card;
+            }
+    
+            card.classList.remove("active", "side", "far");
+        });
+    
+        cards.forEach(card => {
+            const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+            const distance = Math.abs(center - cardCenter);
+    
+            if (card === closestCard) {
+                card.classList.add("active");
+            } else if (distance < 300) {
+                card.classList.add("side");
+            } else {
+                card.classList.add("far");
+            }
+        });
+    }
+    
+    // REAL-TIME (no delay)
+    container.addEventListener("scroll", () => {
+        requestAnimationFrame(updateActiveCard);
+    });
+    
+    window.onload = updateActiveCard;
     </script>
 
 </body>
