@@ -448,7 +448,7 @@
             });
 
             //trigger highlight immediately
-            setTimeout(updateActiveCard, 300);
+            waitForScrollEnd(updateActiveCard);
         }
 
         function scrollCardsRight() {
@@ -463,7 +463,24 @@
             });
 
             //trigger highlight immediately
-            setTimeout(updateActiveCard, 300);
+            waitForScrollEnd(updateActiveCard);
+        }
+    </script>
+
+    <script>
+        function waitForScrollEnd(callback) {
+            const container = document.getElementById("topScroll");
+
+            let isScrolling;
+
+            container.addEventListener("scroll", function listener() {
+                window.clearTimeout(isScrolling);
+
+                isScrolling = setTimeout(() => {
+                    container.removeEventListener("scroll", listener);
+                    callback();
+                }, 100); // fires after scrolling stops
+            });
         }
     </script>
     
@@ -479,8 +496,9 @@
         if (container.scrollLeft >= maxScrollLeft - scrollAmount) {
             container.scrollTo({
                 left: 0,
-                behavior: "smooth"
+                behavior: "auto"
             });
+            updateActiveCard();
         } else {
             container.scrollBy({
                 left: scrollAmount,
@@ -489,7 +507,7 @@
         }
 
         // sync highlight with movement
-        setTimeout(updateActiveCard, 300);
+        waitForScrollEnd(updateActiveCard);
 
     }, 4000);
     </script>
