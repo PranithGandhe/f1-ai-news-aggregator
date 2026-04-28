@@ -188,6 +188,9 @@
             scroll-behavior: smooth;
             align-items: center;
             scroll-snap-type: x proximity;
+            padding-left: calc(50% - 150px);
+            padding-right: calc(50% - 150px);
+            box-sizing: content-box;
         }
 
         .top-scroll::-webkit-scrollbar {
@@ -212,6 +215,7 @@
             scroll-snap-align: center;
             transform: scale(0.9);
             opacity: 0.6;
+            margin: 0 -20px;
         }
 
         /* center card */
