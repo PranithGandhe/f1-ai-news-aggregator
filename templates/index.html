@@ -187,7 +187,7 @@
             padding: 40px 0;
             scroll-behavior: smooth;
             align-items: center;
-            scroll-snap-type: x mandatory;
+            scroll-snap-type: x proximity;
         }
 
         .top-scroll::-webkit-scrollbar {
@@ -462,34 +462,30 @@
     </script>
     
     <script>
-        setInterval(() => {
-            scrollCardsRight();
-        }, 4000);
-    </script>
-
-    <script>
         const container = document.getElementById("topScroll");
-        
-        container.addEventListener("scroll", () => {
+
+        setInterval(() => {
+            const card = document.querySelector(".top-card");
+            const scrollAmount = card ? card.offsetWidth + 20 : 300;
+
             const maxScrollLeft = container.scrollWidth - container.clientWidth;
-        
-            // near end → reset
-            if (container.scrollLeft >= maxScrollLeft - 5) {
+
+            // If near end → jump back to start
+            if (container.scrollLeft >= maxScrollLeft - scrollAmount) {
                 container.scrollTo({
                     left: 0,
                     behavior: "smooth"
                 });
-            }
-        
-            // near start → jump to end (for reverse loop)
-            if (container.scrollLeft <= 0) {
-                container.scrollTo({
-                    left: maxScrollLeft,
+            } else {
+                container.scrollBy({
+                    left: scrollAmount,
                     behavior: "smooth"
                 });
             }
-        });
+
+        }, 4000);
     </script>
+
 
     <script>
         function updateActiveCard() {
@@ -504,7 +500,7 @@
         
                 card.classList.remove("active", "side", "far");
         
-                if (distance < 80) {
+                if (distance < 120) {
                     card.classList.add("active");
                 } else if (distance < 200) {
                     card.classList.add("side");
@@ -514,7 +510,7 @@
             });
         }
         
-        // 🔥 important: trigger after scroll ends
+        // important: trigger after scroll ends
         let scrollTimeout;
         
         container.addEventListener("scroll", () => {
