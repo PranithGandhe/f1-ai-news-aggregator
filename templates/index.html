@@ -442,11 +442,14 @@
             const card = document.querySelector(".top-card");
             const scrollAmount = card ? card.offsetWidth + 20 : 300;
 
-            container.scrollTo({
-                left: Math.max(0, container.scrollLeft - scrollAmount),
+            container.scrollBy({
+                left: -scrollAmount,
                 behavior: "smooth"
-        });
-}
+            });
+
+            //trigger highlight immediately
+            setTimeout(updateActiveCard, 300);
+        }
 
         function scrollCardsRight() {
             const container = document.getElementById("topScroll");
@@ -454,36 +457,41 @@
             const card = document.querySelector(".top-card");
             const scrollAmount = card ? card.offsetWidth + 20 : 300;
 
-            container.scrollTo({
-                left: container.scrollLeft + scrollAmount,
+            container.scrollBy({
+                left: scrollAmount,
                 behavior: "smooth"
-        });
-}
+            });
+
+            //trigger highlight immediately
+            setTimeout(updateActiveCard, 300);
+        }
     </script>
     
     <script>
+        setInterval(() => {
         const container = document.getElementById("topScroll");
 
-        setInterval(() => {
-            const card = document.querySelector(".top-card");
-            const scrollAmount = card ? card.offsetWidth + 20 : 300;
+        const card = document.querySelector(".top-card");
+        const scrollAmount = card ? card.offsetWidth + 20 : 300;
 
-            const maxScrollLeft = container.scrollWidth - container.clientWidth;
+        const maxScrollLeft = container.scrollWidth - container.clientWidth;
 
-            // If near end → jump back to start
-            if (container.scrollLeft >= maxScrollLeft - scrollAmount) {
-                container.scrollTo({
-                    left: 0,
-                    behavior: "smooth"
-                });
-            } else {
-                container.scrollBy({
-                    left: scrollAmount,
-                    behavior: "smooth"
-                });
-            }
+        if (container.scrollLeft >= maxScrollLeft - scrollAmount) {
+            container.scrollTo({
+                left: 0,
+                behavior: "smooth"
+            });
+        } else {
+            container.scrollBy({
+                left: scrollAmount,
+                behavior: "smooth"
+            });
+        }
 
-        }, 4000);
+        // sync highlight with movement
+        setTimeout(updateActiveCard, 300);
+
+    }, 4000);
     </script>
 
 
@@ -512,11 +520,6 @@
         
         // important: trigger after scroll ends
         let scrollTimeout;
-        
-        container.addEventListener("scroll", () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(updateActiveCard, 100);
-        });
         
         // run on load
         window.onload = updateActiveCard;
