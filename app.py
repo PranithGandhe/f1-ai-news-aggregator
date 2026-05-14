@@ -35,7 +35,6 @@ def home():
 
     columns = [col[0] for col in cursor.description]
     articles = [dict(zip(columns, row)) for row in rows]
-
     for article in articles:
         article["display_date"] = get_display_date(
             article.get("published_date"),
