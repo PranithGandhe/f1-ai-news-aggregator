@@ -36,12 +36,23 @@ def home():
     columns = [col[0] for col in cursor.description]
     articles = [dict(zip(columns, row)) for row in rows]
 
+    for article in articles:
+        article["display_date"] = get_display_date(
+            article.get("published_date"),
+            article.get("processed_at")
+        )
+
     query_latest = load_query("GET_LATEST_10")
     cursor.execute(query_latest)
 
     latest_rows = cursor.fetchall()
     latest_columns = [col[0] for col in cursor.description]
     latest_articles = [dict(zip(latest_columns, row)) for row in latest_rows]
+    for article in latest_articles:
+        article["display_date"] = get_display_date(
+            article.get("published_date"),
+            article.get("processed_at")
+        )
 
     conn.close()
 
@@ -67,6 +78,12 @@ def category_page(category):
 
     columns = [col[0] for col in cursor.description]
     articles = [dict(zip(columns, row)) for row in rows]
+
+    for article in articles:
+        article["display_date"] = get_display_date(
+            article.get("published_date"),
+            article.get("processed_at")
+        )
 
     conn.close()
 
@@ -110,6 +127,27 @@ def time_ago(published_date):
         return "Yesterday"
     else:
         return f"{int(seconds // 86400)} days ago"
+
+def get_display_date(published_date, processed_at):
+    from datetime import datetime, timezone
+
+    if not published_date:
+        return processed_at
+
+    try:
+        if isinstance(published_date, str):
+            published_date = datetime.fromisoformat(published_date)
+
+        # normalize timezone
+        if published_date.tzinfo is None:
+            published_date = published_date.replace(tzinfo=timezone.utc)
+        else:
+            published_date = published_date.astimezone(timezone.utc)
+
+        return published_date
+
+    except:
+        return processed_at
 
 
 if __name__ == "__main__":
