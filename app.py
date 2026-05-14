@@ -53,6 +53,11 @@ def home():
             article.get("processed_at")
         )
 
+    for article in articles:
+        print("PUBLISHED:", article.get("published_date"))
+        print("PROCESSED:", article.get("processed_at"))
+        print("----")
+
     conn.close()
 
     return render_template(
